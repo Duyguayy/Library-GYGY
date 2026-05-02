@@ -1,7 +1,5 @@
 package com.example.libraryapp.ui.screen
 
-
-
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.libraryapp.ui.components.BookCard
 import com.example.libraryapp.ui.viewmodel.AuthViewModel
 import com.example.libraryapp.ui.viewmodel.BookViewModel
 
@@ -26,25 +25,35 @@ fun HomeScreen(
     authViewModel: AuthViewModel,
     bookViewModel: BookViewModel
 ) {
-    val profileState by authViewModel.profile.collectAsState();
-    val books by bookViewModel.books.collectAsState();
-    val isLoading by bookViewModel.isLoading.collectAsState();
+    val profileState by authViewModel.profile.collectAsState()
+    val books        by bookViewModel.books.collectAsState()
+    val isLoading    by bookViewModel.isLoading.collectAsState()
 
-    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+    Column(
+        modifier              = Modifier.fillMaxSize(),
+        horizontalAlignment   = Alignment.CenterHorizontally,
+        verticalArrangement   = Arrangement.Center
+    ) {
         when {
-            isLoading ->  CircularProgressIndicator(modifier=Modifier.size(20.dp),
+            isLoading -> CircularProgressIndicator(
+                modifier    = Modifier.size(20.dp),
                 strokeWidth = 2.dp,
-                color = MaterialTheme.colorScheme.onPrimary)
+                color       = MaterialTheme.colorScheme.primary
+            )
+
             books.isEmpty() -> Text("Kitaplar yüklenemedi.")
-            else -> LazyColumn(modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(32.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                items(books, key = {it.id})
-                {
-                    // ÖDEV 3: Bir "Kitap" kart tasarımı (ayrı composable) buradaki listede
-                    // doldurulsun.
-                        book ->
-                    Text(book.title)
+
+            else -> LazyColumn(
+                modifier            = Modifier.fillMaxSize(),
+                contentPadding      = PaddingValues(vertical = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(0.dp)
+            ) {
+                items(books, key = { it.id }) { book ->
+                    BookCard(
+                        book          = book,
+                        onEditClick   = { /* TODO: düzenleme ekranına git */ },
+                        onDeleteClick = { bookViewModel.deleteBook(book.id) }
+                    )
                 }
             }
         }

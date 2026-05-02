@@ -64,6 +64,8 @@ dependencies {
     implementation(libs.ktor.client.android)
     implementation(libs.kotlinx.serialization.json)
 
+    implementation("androidx.compose.material:material-icons-extended")
+
     implementation(platform(libs.supabase.bom))   // ← platform() zorunlu
     implementation(libs.supabase.postgrest)
     implementation(libs.supabase.auth)
