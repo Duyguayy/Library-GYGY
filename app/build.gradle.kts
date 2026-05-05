@@ -63,9 +63,9 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.ktor.client.android)
     implementation(libs.kotlinx.serialization.json)
-
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
     implementation("androidx.compose.material:material-icons-extended")
-
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
     implementation(platform(libs.supabase.bom))   // ← platform() zorunlu
     implementation(libs.supabase.postgrest)
     implementation(libs.supabase.auth)
